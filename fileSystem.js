@@ -1,12 +1,4 @@
-
-
-
-
-
-
-
 import {promises as fs} from "fs"
-
 
 class ProductManager{
     constructor(){
@@ -33,6 +25,7 @@ class ProductManager{
         this.products.push(newProduct)
 
        await fs.writeFile(this.patch,JSON.stringify(this.products));
+       console.log("Producto Agregado")
     };
 
     readProducts=async()=>{
@@ -64,14 +57,34 @@ class ProductManager{
             console.log("Producto Eliminado ")
         } 
     
-       
+    updateProducts=async({id,...producto})=>{
+        await this.deleteProductById(id);
+        let productOld=await this.readProducts()
+        let productsModif=[{...producto,id },...productOld]
+        await fs.writeFile(this.patch,JSON.stringify(productsModif))
+
+        
+       }
 } 
 
 const productos= new ProductManager(); 
 
 //productos.getProducts()
+//productos.addProduct("titulo1",'descripcion1',200,"imagen1","asde1",3)
+//productos.addProduct("titulo2",'descripcion2',1200,"imagen2","ased1",5)
+//productos.addProduct("titulo3",'descripcion3',2200,"imagen3","ased1",9)
 
-//productos.getProductsById(7)
+//productos.getProductsById(3)
 
-productos.deleteProductById(1)
+//productos.deleteProductById(1)
+
+productos.updateProducts({
+    title: 'titulo2',
+    description: 'descripcion2',
+    price: 8200,
+    imagen: 'imagen5',
+    code: 'ased1',
+    stock: 5,
+    id: 2
+  })
 

@@ -1,1 +1,1 @@
-[{"title":"title1","description":"Description1","price":1000,"imagen":"Imagen1","code":"abc123","stock":5,"id":1},{"title":"title3","description":"Description3","price":2000,"imagen":"Imagen3","code":"abc1235","stock":5,"id":3}]
+[{"title":"titulo2","description":"descripcion2","price":8200,"imagen":"imagen5","code":"ased1","stock":5,"id":2},{"title":"titulo1","description":"descripcion1","price":200,"imagen":"imagen1","code":"asde1","stock":3,"id":1},{"title":"titulo3","description":"descripcion3","price":2200,"imagen":"imagen3","code":"ased1","stock":9,"id":3}]
