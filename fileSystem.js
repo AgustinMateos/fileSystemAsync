@@ -10,7 +10,8 @@ class ProductManager{
 
     addProduct=async(title,description,price,imagen,code,stock)=>{
 
-         ProductManager.id++ 
+         ProductManager.id++ /*cada vez que se agrega un producto con los parametros 
+                              indicados, se asigna id incrementado el id */
 
 
         let newProduct={
@@ -24,23 +25,26 @@ class ProductManager{
         }
         this.products.push(newProduct)
 
-       await fs.writeFile(this.patch,JSON.stringify(this.products));
+       await fs.writeFile(this.patch,JSON.stringify(this.products));/*fileSystem con promesas,
+        se escribe un archivo con la ruta dada por parametro y se le pasa el array de productos */
        console.log("Producto Agregado")
     };
 
-    readProducts=async()=>{
+    readProducts=async()=>{/* funcion que lee los productos del archivo pasado*/
     let respuesta= await fs.readFile(this.patch,"utf-8") 
     return JSON.parse(respuesta)
     }
 
 
-    getProducts = async () => {
+    getProducts = async () => {/* funcion que lee los productos */ 
         let respuesta2=await this.readProducts()
        return console.log(respuesta2)
     }
 
-
-    getProductsById=async(id)=>{
+/* obetener producto by id, se crea un let que trae la funcion generada,  readProducts, 
+dsp se crea una funcion para que si el id ingresado no esta en el listado de productos, por consola aparezca producto no encontrado
+sino que devuelva el producto con ese id */ 
+    getProductsById=async(id)=>{ 
        let respuesta3=await this.readProducts()
        if(!respuesta3.find(product=>product.id===id)){
         console.log("Producto no encontrado")
@@ -49,6 +53,9 @@ class ProductManager{
        }
     }
 
+    /*para borrar un producto por id se crea una nueva funcion q llame a la funcion leer los propductos
+    
+    luego se hace un let filtrer de respuesta3, devuelve un array con los productos que sean distintos al id ingresado*/
     deleteProductById=async(id)=>{
         
             let respuesta3= await this.readProducts();
@@ -56,14 +63,13 @@ class ProductManager{
             await fs.writeFile(this.patch,JSON.stringify(productFilter));
             console.log("Producto Eliminado ")
         } 
-    
+    /* para modificar producto mantengo el id y traigo las propiedades de producto 
+    luego se borra el producto por id */
     updateProducts=async({id,...producto})=>{
         await this.deleteProductById(id);
         let productOld=await this.readProducts()
         let productsModif=[{...producto,id },...productOld]
         await fs.writeFile(this.patch,JSON.stringify(productsModif))
-
-        
        }
 } 
 
